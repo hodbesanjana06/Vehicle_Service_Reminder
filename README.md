@@ -4,20 +4,6 @@ A smart **Vehicle Service Reminder Web Application** built using Django that hel
 
 ---
 
-## 📌 Overview
-
-The **Vehicle Service Reminder System** is designed to help vehicle owners never miss important service deadlines such as oil changes, insurance renewals, inspections, and general maintenance.
-
-The system allows users to store vehicle details, schedule service reminders, and automate notifications using WhatsApp integration.
-
----
-
-## 🎯 Problem Statement
-
-Vehicle owners often forget timely maintenance which leads to poor vehicle performance and higher repair costs. This project solves this problem by automating service tracking and reminders.
-
----
-
 ## ✨ Features
 
 - 🚘 Add and manage multiple vehicles
@@ -56,19 +42,33 @@ Vehicle owners often forget timely maintenance which leads to poor vehicle perfo
 ### 1. Clone the repository
 ```bash
 git clone https://github.com/your-username/vehicle-service-reminder.git
-2. Move into project directory
+```
+### 2. Move into project directory
+```
 cd vehicle-service-reminder
-3. Create virtual environment
+```
+
+### 3. Create virtual environment
+```
 python -m venv venv
-4. Activate virtual environment
+```
+### 4. Activate virtual environment
+```
 venv\Scripts\activate   # Windows
-5. Install dependencies
+```
+### 5. Install dependencies
+```
 pip install -r requirements.txt
-6. Run migrations
+```
+### 6. Run migrations
+```
 python manage.py migrate
-7. Start server
+```
+### 7. Start server
+```
 python manage.py runserver
 ```
+
 ---
 
 ## 📂 Project Structure
@@ -102,19 +102,35 @@ vehicle-service-reminder/
 6. User receives service notification instantly
 
 ---
----
-## Screenshots
-<img src="login.png" width="800">
-<br>
-<img src="dashboard.png" width="800">
-<br>
-<img src="add_vehicle.png" width="800">
-<br>
-<img src="book-vehicle.png" width="800">
-<br>
-<img src="service-history.png" width="800">
-<br>
-<img src="reminder-msg.png" width="800">
 
+## 📸 Application Screenshots
+
+### 🔐 Login Page
+<img src="login.png" width="800">
+
+<br><br>
+
+### 🏠 Dashboard
+<img src="dashboard.png" width="800">
+
+<br><br>
+
+### 🚘 Add Vehicle
+<img src="add-vehicle.png" width="800">
+
+<br><br>
+
+### 📅 Book Vehicle Service
+<img src="book-vehicle.png" width="800">
+
+<br><br>
+
+### 🧾 Service History
+<img src="service-history.png" width="800">
+
+<br><br>
+
+### 📲 WhatsApp Reminder (Automation)
+<img src="reminder-msg.png" width="800">
 
 
