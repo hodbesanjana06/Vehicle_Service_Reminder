@@ -1,0 +1,220 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - VehicleCare{% endblock %}
+
+{% block content %}
+
+<!-- Uber-style Dashboard Main -->
+<div class="dashboard-container">
+
+    <!-- Top Navbar -->
+    <div class="topbar d-flex justify-content-between align-items-center mb-4">
+    <h5 style="color:#17a2b8;">VehicleCare</h3>
+        <div class="topbar-icons d-flex align-items-center gap-3">
+            <div class="dropdown">
+                <i class="fas fa-bell" id="notifDropdown" data-bs-toggle="dropdown"></i>
+                <ul class="dropdown-menu dropdown-menu-end notif-menu">
+                    {% if notifications %}
+                        {% for notif in notifications %}
+                        <li class="dropdown-item {{ notif.color }}">{{ notif.message }}</li>
+                        {% endfor %}
+                    {% else %}
+                        <li class="dropdown-item text-muted">No notifications</li>
+                    {% endif %}
+                </ul>
+            </div>
+            <div class="dropdown">
+    <i class="fas fa-user-circle fa-lg text-white" id="profileDropdown" data-bs-toggle="dropdown" style="cursor:pointer;"></i>
+    <ul class="dropdown-menu dropdown-menu-end shadow-sm profile-menu" style="min-width:200px; border-radius:10px; background:#1e1e2f; color:#fff; padding:5px 0;">
+        <li>
+            <a class="dropdown-item" href="{% url 'profile' %}" style="color:#17a2b8; padding:10px 20px; display:flex; align-items:center;">
+                <i class="fas fa-id-card me-2"></i> View Profile
+            </a>
+        </li>
+        <li>
+            <a class="dropdown-item" href="{% url 'edit_profile' %}" style="color:#17a2b8; padding:10px 20px; display:flex; align-items:center;">
+                <i class="fas fa-edit me-2"></i> Edit Profile
+            </a>
+        </li>
+        <li><hr class="dropdown-divider" style="border-color:#444;"></li>
+        <li>
+            <a class="dropdown-item text-danger" href="{% url 'logout' %}" style="padding:10px 20px; display:flex; align-items:center;">
+                <i class="fas fa-sign-out-alt me-2"></i> Logout
+            </a>
+        </li>
+    </ul>
+</div>
+        </div>
+    </div>
+
+    <!-- Summary Cards Row -->
+    <div class="row g-4 mb-4">
+        <div class="col-md-3">
+            <div class="uber-card">
+                <div class="card-icon"><i class="fas fa-car"></i></div>
+                <div class="card-label">Total Vehicles</div>
+                <div class="card-value">{{ total_vehicles }}</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="uber-card">
+                <div class="card-icon"><i class="fas fa-list-check"></i></div>
+                <div class="card-label">Total Services</div>
+                <div class="card-value">{{ total_services }}</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="uber-card">
+                <div class="card-icon"><i class="fas fa-calendar-check"></i></div>
+                <div class="card-label">Upcoming Services</div>
+                <div class="card-value">{{ upcoming_services|length }}</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="uber-card">
+                <div class="card-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                <div class="card-label">Active Alerts</div>
+                <div class="card-value">{{ active_alerts|length }}</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content Row -->
+    <div class="row g-4">
+        <!-- Upcoming Services -->
+        <div class="col-lg-8">
+            <div class="uber-panel">
+                <h5 class="panel-title">Upcoming Services</h5>
+                <div class="service-list">
+                    {% for service in upcoming_services %}
+                    <div class="service-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <strong style="color: #17a2b8;">{{ service.name }}</strong><br>
+                            {{ service.vehicle_number }}<br>
+                            Next Service: {{ service.next_date }}
+                        </div>
+                        <span class="badge 
+                            {% if service.status == 'Overdue' %}bg-danger
+                            {% elif service.status == 'Due Soon' %}bg-warning text-dark
+                            {% else %}bg-success{% endif %}">
+                            {{ service.status }}
+                        </span>
+                    </div>
+                    {% empty %}
+                    <div class="service-item empty">No upcoming services</div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="col-lg-4">
+            <div class="uber-panel">
+                <h5 class="panel-title">Quick Actions</h5>
+                <a href="{% url 'book_service_table' %}" class="btn uber-btn-primary mb-2">
+                    <i class="fas fa-plus me-2"></i> Book Service
+                </a>
+                <a href="{% url 'add_vehicle' %}" class="btn uber-btn-secondary mb-2">
+                    <i class="fas fa-car me-2"></i> Add Vehicle
+                </a>
+                <a href="{% url 'booking_history' %}" class="btn uber-btn-secondary">
+                    <i class="fas fa-history me-2"></i> Booking History
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+/* ---------- Dashboard Styles ---------- */
+.dashboard-container {
+    padding: 20px;
+}
+
+/* Topbar */
+.topbar {
+    background-color: #1b1b2f;
+    padding: 10px 20px;
+    border-radius: 12px;
+}
+.topbar .search-input {
+    width: 300px;
+    padding: 6px 12px;
+    border-radius: 12px;
+    border: none;
+    background-color: #2e2e4d;
+    color: #fff;
+}
+.topbar-icons i {
+    font-size: 1.4rem;
+    cursor: pointer;
+    color: #fff;
+}
+
+/* Uber-style Cards */
+.uber-card {
+    background-color: #1e1e2f;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+    color: #fff;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.6);
+    transition: transform 0.2s;
+}
+.uber-card:hover { transform: translateY(-3px); }
+.uber-card .card-icon { font-size: 2rem; margin-bottom: 10px; color: #1FBAD6; }
+.uber-card .card-label { font-size: 0.9rem; color: #aaa; }
+.uber-card .card-value { font-size: 1.5rem; font-weight: bold; }
+
+/* Panels */
+.uber-panel {
+    background-color: #1e1e2f;
+    border-radius: 12px;
+    padding: 20px;
+    color: #fff;
+}
+.uber-panel .panel-title { font-weight: 600; margin-bottom: 15px; }
+
+/* Upcoming Services */
+.service-list { display: flex; flex-direction: column; gap: 12px; }
+.service-item {
+    background-color: #2e2e4d;
+    padding: 12px 16px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: transform 0.2s;
+}
+.service-item:hover { transform: translateY(-2px); }
+.service-item.empty { text-align: center; color: #aaa; }
+
+/* Quick Action Buttons */
+.uber-btn-primary {
+    background-color: #1FBAD6;
+    color: #fff;
+    width: 100%;
+    padding: 10px;
+    border-radius: 12px;
+    font-weight: 600;
+}
+.uber-btn-primary:hover { background-color: #17a2b8; }
+.uber-btn-secondary {
+    background-color: #2e2e4d;
+    color: #fff;
+    width: 100%;
+    padding: 10px;
+    border-radius: 12px;
+    font-weight: 600;
+}
+.uber-btn-secondary:hover { background-color: #3a3a5a; }
+
+/* Notifications & Profile Dropdowns */
+.notif-menu, .profile-menu {
+    background-color: #1b1b2f;
+    color: #fff;
+}
+.notif-menu li, .profile-menu li { padding: 10px; }
+</style>
+
+{% endblock %}

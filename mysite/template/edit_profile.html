@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5" style="max-width:600px;">
+
+    <div class="card shadow-sm p-4" style="border-radius:15px; background:#2a2a40;">
+        <h3 class="mb-4  text-center" style="color:#17a2b8;">Edit Profile</h3>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <!-- Mobile Number -->
+            <div class="mb-3">
+                <label class="form-label text-white">Mobile Number</label>
+                <input type="text" name="mobile" maxlength="10" value="{{ profile.mobile_number }}" class="form-control" placeholder="Enter your mobile number" required>
+            </div>
+
+            <!-- Address -->
+            <div class="mb-3">
+                <label class="form-label text-white">Address</label>
+                <textarea name="address" class="form-control" rows="3" placeholder="Enter your address" required>{{ profile.address }}</textarea>
+            </div>
+
+            <!-- Email -->
+            <div class="mb-3">
+                <label class="form-label text-white">Email</label>
+                <input type="email" name="email" value="{{ user.email }}" class="form-control" placeholder="Enter your email" required>
+            </div>
+
+            <!-- Buttons -->
+            <div class="d-flex justify-content-between mt-4">
+                <button type="submit" class="btn btn-success px-4">Save Changes</button>
+                <a href="{% url 'profile' %}" class="btn btn-secondary px-4">Cancel</a>
+            </div>
+
+        </form>
+    </div>
+
+</div>
+{% endblock %}

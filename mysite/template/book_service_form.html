@@ -1,0 +1,180 @@
+{% extends "base.html" %}
+{% block title %}Book Service{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+
+            <div class="card shadow-lg border-0" style="border-radius: 16px; background: #1e1e2f;">
+                
+                <!-- Header -->
+                <div class="p-4 border-bottom" style="border-color: #2c2c3e;">
+                    <h4 class="text-white mb-1"> {{ vehicle.name }} - {{ vehicle.vehicle_number }}</h4>
+                    <small class="text-muted">Schedule your vehicle service</small>
+                </div>
+
+                <div class="p-4">
+                    <form method="POST" action="{% url 'book_service_submit' vehicle.id %}">
+                        {% csrf_token %}
+
+                        <!-- Service Type -->
+                        <div class="mb-3">
+                            <label class="form-label text-light">Service Type</label>
+                            <select name="service_type" id="service_type" class="form-select" required>
+                                <option value="">Select Service</option>
+                                {% for key, value in service_choices %}
+                                    <option value="{{ key }}">{{ value }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <!-- Service Date -->
+                        <div class="mb-3">
+                            <label class="form-label text-light">Service Date</label>
+                            <input type="date" name="service_date" id="service_date" class="form-control" required>
+                        </div>
+
+                        <!-- City -->
+                        <div class="mb-3">
+                            <label class="form-label text-light">City</label>
+                            <select name="city" id="city" class="form-select" required>
+                                <option value="">Select City</option>
+                                <option value="Mumbai">Mumbai</option>
+                                <option value="Pune">Pune</option>
+                                <option value="Bangalore">Bangalore</option>
+                            </select>
+                        </div>
+
+                        <!-- Garage Section (Hidden Initially) -->
+                        <div id="garage-section" style="display:none;">
+
+                            <!-- Garage Dropdown -->
+                            <div class="mb-3">
+                                <label class="form-label text-light">Select Garage</label>
+                                <select id="garage-select" name="garage" class="form-select" required></select>
+                            </div>
+
+                            <!-- Map -->
+                            <div id="garage-map" style="height: 250px; border-radius: 10px; margin-bottom: 20px;"></div>
+
+                        </div>
+
+                        <!-- Time Slot -->
+                        <div class="mb-3">
+                            <label class="form-label text-light">Time Slot</label>
+                            <select name="timeslot" class="form-select" required>
+                                <option value="">Select Time Slot</option>
+                                {% for key, value in timeslot_choices %}
+                                    <option value="{{ key }}">{{ value }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+
+                        <!-- Pickup & Drop -->
+                        <div class="mb-3">
+                            <label class="form-label text-light">Pickup & Drop</label>
+                            <select name="pickup_drop" id="pickup_drop" class="form-select">
+                                {% for key, value in pickup_drop_choices %}
+                                    <option value="{{ key }}">{{ value }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <!-- Address -->
+                        <div class="mb-3" id="pickup_address_div" style="display:none;">
+                            <label class="form-label text-light">Pickup/Drop Address</label>
+                            <input type="text" name="pickup_drop_address" class="form-control">
+                        </div>
+
+                        <!-- Notes -->
+                        <div class="mb-3">
+                            <label class="form-label text-light">Additional Note</label>
+                            <textarea name="additional_note" class="form-control"></textarea>
+                        </div>
+
+                        <!-- Buttons -->
+                        <div class="d-flex gap-2 mt-4">
+                            <button type="submit" class="btn btn-success w-100">
+                                Confirm Booking
+                            </button>
+                            <a href="{% url 'dashboard' %}" class="btn btn-outline-light w-100">
+                                Cancel
+                            </a>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Leaflet -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<script>
+let map;
+
+// Show pickup field
+document.getElementById('pickup_drop').addEventListener('change', function() {
+    document.getElementById('pickup_address_div').style.display =
+        this.value === 'no' ? 'none' : 'block';
+});
+
+// Show garages only after city selection
+document.getElementById('city').addEventListener('change', function() {
+    const city = this.value;
+    const section = document.getElementById('garage-section');
+
+    if (!city) {
+        section.style.display = 'none';
+        return;
+    }
+
+    section.style.display = 'block';
+
+    fetch(`/api/garages/?city=${city}`)
+        .then(res => res.json())
+        .then(data => {
+            const select = document.getElementById('garage-select');
+            select.innerHTML = '';
+
+            if (data.length === 0) {
+                select.innerHTML = '<option>No garages found</option>';
+                return;
+            }
+
+            data.forEach(g => {
+                const option = document.createElement('option');
+                option.value = g.id;
+                option.text = `${g.name} - ${g.location}`;
+                select.appendChild(option);
+            });
+
+            const first = data[0];
+
+            if (!map) {
+                map = L.map('garage-map').setView([first.lat, first.lng], 12);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+            } else {
+                map.setView([first.lat, first.lng], 12);
+                map.eachLayer(layer => {
+                    if (layer instanceof L.Marker) map.removeLayer(layer);
+                });
+            }
+
+            data.forEach(g => {
+                const marker = L.marker([g.lat, g.lng]).addTo(map);
+                marker.bindPopup(`<b>${g.name}</b><br>${g.location}`);
+                marker.on('click', () => {
+                    select.value = g.id;
+                });
+            });
+        });
+});
+</script>
+
+{% endblock %}

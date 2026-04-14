@@ -1,0 +1,178 @@
+{% extends "base.html" %}
+{% block title %}Service History{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+
+    <!-- USER CARD -->
+    <div class="card mb-5 p-2 border-0 shadow" style="background:#1e1e2f; border-radius:12px; max-width:450px;">
+        <div class="d-flex align-items-center">
+            <div class="me-2">
+                <div style="width:40px; height:40px; border-radius:50%; background:#4e73df; display:flex; align-items:center; justify-content:center; font-size:18px; color:white;">
+                    {{ user.username|first|upper }}
+                </div>
+            </div>
+            <div>
+                <h5 class="text-white mb-0">{{ user.username }}</h5>
+                <small style="color:#bbb; font-size:14px;">{{ user.email }}</small><br>
+                {% if user.userprofile.mobile_number %}
+                <small style="color:#aaa; font-size:13px;">📞 {{ user.userprofile.mobile_number }}</small>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- TITLE -->
+    <h4 class="text-white mb-3" style="color:#17a2b8;">🛠 Service History</h4>
+
+    {% if bookings %}
+    <div class="timeline">
+
+        {% for b in bookings %}
+        <div class="timeline-item d-flex mb-2">
+
+            <!-- DOT -->
+            <div class="timeline-dot me-2">
+                {% if b.status == "Completed" %}
+                    <div style="background:#28a745;"></div>
+                {% elif b.status == "Today" %}
+                    <div style="background:#ffc107;"></div>
+                {% else %}
+                    <div style="background:#17a2b8;"></div>
+                {% endif %}
+            </div>
+
+            <!-- CARD -->
+            <div class="card flex-grow-1 border-0 shadow-sm p-2" style="background:#2a2a40; border-radius:10px; font-size:14px; overflow:hidden;">
+
+                <!-- HEADER -->
+                <div class="clickable-header d-flex justify-content-between align-items-center" onclick="toggleCard({{ b.id }})" style="cursor:pointer;">
+                    <div>
+                        <h6 class="text-white mb-0" style="font-size:15px;">
+                            {{ b.vehicle.name }} ({{ b.vehicle.vehicle_number }})
+                        </h6>
+                        <small style="color:#bbb; font-size:13px;">
+                            {{ b.get_service_type_display }}
+                        </small><br>
+                        
+                    </div>
+                    <div class="text-end ms-2">
+                        {% if b.status == "Completed" %}
+                            <span class="badge bg-success" style="font-size:11px;">Completed</span>
+                        {% elif b.status == "Today" %}
+                            <span class="badge bg-warning text-dark" style="font-size:11px;">Today</span>
+                        {% else %}
+                            <span class="badge bg-info" style="font-size:11px;">Upcoming</span>
+                        {% endif %}
+                        <br>
+                        <small style="color:#ccc; font-size:12px;">{{ b.service_date }}</small>
+                    </div>
+                </div>
+
+                <!-- DETAILS -->
+                <div id="details-{{ b.id }}" class="p-2 border-top" style="display:none;">
+
+                   
+                    <p style="color:#ddd; margin-bottom:2px;">
+                        <strong>Last Service : </strong> {{  b.vehicle.last_service_date }}
+                    </p>
+
+                    {% if b.timeslot %}
+                    <p style="color:#ddd; margin-bottom:2px;">
+                        <strong>Time : </strong> {{ b.get_timeslot_display }}
+                    </p>
+                    {% endif %}
+
+                    {% if b.garage %}
+                    <p style="color:#ddd; margin-bottom:2px;">
+                        <strong>Garage : </strong> {{ b.garage.name }} - {{ b.garage.location }}
+                    </p>
+                    {% endif %}
+
+                    {% if b.pickup_drop and b.pickup_drop != "no" %}
+                    <p style="color:#ddd; margin-bottom:2px;">
+                        <strong>Pickup-Drop : </strong> {{ b.get_pickup_drop_display }}
+                    </p>
+
+                    {% if b.pickup_drop_address %}
+                    <p style="color:#aaa; margin-bottom:2px;">
+                        📍 {{ b.pickup_drop_address }}
+                    </p>
+                    {% endif %}
+                    {% endif %}
+
+                    {% if b.additional_note %}
+                    <p style="color:#aaa; margin-bottom:2px;">
+                        📝 {{ b.additional_note }}
+                    </p>
+                    {% endif %}
+
+                    <!-- ACTIONS -->
+                    {% if b.status != "Completed" %}
+                    <div class="d-flex gap-1 mt-1">
+                        <a href="{% url 'edit_booking' b.id %}" class="btn btn-outline-warning btn-sm" style="font-size:11px; padding:3px 7px;">
+                            ✏️ Edit
+                        </a>
+                        <a href="{% url 'delete_booking' b.id %}" class="btn btn-outline-danger btn-sm" style="font-size:11px; padding:3px 7px;">
+                            🗑 Delete
+                        </a>
+                    </div>
+                    {% else %}
+                    <small style="color:#888;">No actions available</small>
+                    {% endif %}
+
+                </div>
+
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+    {% else %}
+    <div class="text-center mt-5">
+        <h5 class="text-white">No service history yet 🛠</h5>
+        <p style="color:#bbb;">Your bookings will appear here.</p>
+    </div>
+    {% endif %}
+
+</div>
+
+<!-- STYLE -->
+<style>
+.timeline {
+    position: relative;
+    padding-left: 12px;
+}
+
+.timeline::before {
+    content: "";
+    position: absolute;
+    left: 5px;
+    top: 0;
+    width: 2px;
+    height: 100%;
+    background: #555;
+}
+
+.timeline-dot div {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-top: 5px;
+}
+
+.card:hover {
+    transform: translateY(-1px);
+    transition: 0.2s;
+}
+</style>
+
+<!-- SCRIPT -->
+<script>
+function toggleCard(id) {
+    let el = document.getElementById("details-" + id);
+    el.style.display = (el.style.display === "none") ? "block" : "none";
+}
+</script>
+
+{% endblock %}

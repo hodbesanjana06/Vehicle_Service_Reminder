@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% block title %}Edit Booking - {{ booking.vehicle.name }}{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-6">
+
+      <div class="card shadow-lg border-0 p-4">
+
+        <h4 class="mb-4 text-center">Edit Booking</h4>
+
+        <form method="POST">
+          {% csrf_token %}
+
+          <!-- Service Type -->
+          <div class="mb-3">
+            <label class="form-label">Service Type</label>
+            <select name="service_type" class="form-select" required>
+              <option value="">Select Service</option>
+
+              {% for key, value in service_choices %}
+                <option value="{{ key }}" {% if booking.service_type == key %}selected{% endif %}>
+                  {{ value }}
+                </option>
+              {% endfor %}
+
+            </select>
+          </div>
+
+
+
+
+          <!-- Service Date -->
+          <div class="mb-3">
+            <label class="form-label">Service Date</label>
+            <input type="date" name="service_date" class="form-control"
+                   value="{{ booking.service_date }}" required>
+          </div>
+
+          <!-- Time Slot -->
+          <div class="mb-3">
+            <label class="form-label">Time Slot</label>
+            <select name="timeslot" class="form-select" required>
+                {% for key, value in timeslot_choices %}
+                    <option value="{{ key }}" {% if booking.timeslot == key %}selected{% endif %}>
+                        {{ value }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+          <!-- Pickup & Drop -->
+        <div class="mb-3">
+          <label class="form-label">Pickup & Drop</label>
+          <select name="pickup_drop" id="pickup_drop_edit" class="form-select">
+              {% for key, value in pickup_drop_choices %}
+                  <option value="{{ key }}" {% if booking.pickup_drop == key %}selected{% endif %}>
+                      {{ value }}
+                  </option>
+              {% endfor %}
+          </select>
+      </div>
+
+          <!-- Address -->
+          <div class="mb-3" id="pickup_drop_address_div_edit"
+               {% if booking.pickup_drop == 'no' %}style="display:none;"{% endif %}>
+            <label class="form-label">Pickup/Drop Address</label>
+            <input type="text" name="pickup_drop_address"
+                   class="form-control"
+                   value="{{ booking.pickup_drop_address }}">
+          </div>
+
+          <!-- Additional Note -->
+          <div class="mb-3">
+            <label class="form-label">Additional Note</label>
+            <textarea name="additional_note" class="form-control" rows="3">{{ booking.additional_note }}</textarea>
+          </div>
+
+          <!-- Button -->
+          <button type="submit" class="btn btn-success w-100">
+            Update Booking
+          </button>
+
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const pickupSelect = document.getElementById('pickup_drop_edit');
+const addressDiv = document.getElementById('pickup_drop_address_div_edit');
+
+pickupSelect.addEventListener('change', function() {
+  if (['pickup_only', 'drop_only', 'both'].includes(this.value)) {
+    addressDiv.style.display = 'block';
+  } else {
+    addressDiv.style.display = 'none';
+  }
+});
+</script>
+
+{% endblock %}

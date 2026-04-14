@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block title %}Add Vehicle - My Garage{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+
+            <div class="card shadow-lg border-0" style="border-radius: 16px; background: #1e1e2f;">
+                
+                <!-- Header -->
+                <div class="p-4 border-bottom" style="border-color: #2c2c3e;">
+                    <h4 class="text-white mb-1"> Add New Vehicle</h4>
+                    <small class="text-muted">Fill in vehicle details below</small>
+                </div>
+
+                <!-- Form -->
+                <div class="p-4">
+
+                    <form method="POST">
+                        {% csrf_token %}
+
+                        <!-- Vehicle Name -->
+                        <div class="mb-3">
+                            <label class="form-label text-light">Vehicle Name</label>
+                            {{ form.name }}
+                        </div>
+
+                        <!-- Vehicle Number -->
+                        <div class="mb-3">
+                            <label class="form-label text-light">Vehicle Number</label>
+                            {{ form.vehicle_number }}
+                        </div>
+
+                        <!-- Row: Type + Fuel -->
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label text-light">Vehicle Type</label>
+                                {{ form.vehicle_type }}
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label text-light">Fuel Type</label>
+                                {{ form.fuel_type }}
+                            </div>
+                        </div>
+
+                        <!-- Last Service -->
+                        <div class="mb-3">
+                            <label class="form-label text-light">Last Service Date</label>
+                            {{ form.last_service_date }}
+                        </div>
+
+                        <!-- Interval -->
+                        <div class="mb-3">
+                            <label class="form-label text-light">Service Interval (Days)</label>
+                            {{ form.service_interval_days }}
+                        </div>
+
+                        <!-- Errors -->
+                        {% if form.errors %}
+                        <div class="alert alert-danger">
+                            {{ form.errors }}
+                        </div>
+                        {% endif %}
+
+                        <!-- Buttons -->
+                        <div class="d-flex gap-2 mt-4">
+                            <button type="submit" class="btn btn-primary w-100">
+                                ➕ Add Vehicle
+                            </button>
+                            <a href="{% url 'dashboard' %}" class="btn btn-outline-light w-100">
+                                Cancel
+                            </a>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="row justify-content-center align-items-center" style="min-height: 90vh; background:#14141f;">
+    <div class="col-md-5">
+        <div class="card p-4 shadow-lg" style="background:#1e1e2f; border-radius:15px; border:1px solid #2a2a40;">
+
+            <!-- TITLE -->
+            <div class="text-center mb-4">
+                <i class="fas fa-user-plus fa-3x mb-2" style="color:#17a2b8;"></i>
+                <h3 class="text-white">Register</h3>
+            </div>
+
+            <!-- FORM -->
+            <form method="POST">
+                {% csrf_token %}
+                
+                <div class="mb-3">
+                    <label class="form-label text-white">
+                        <i class="fas fa-user me-2" style="color:#17a2b8;"></i>Username
+                    </label>
+                    <input type="text" name="username" class="form-control bg-dark text-white border-1" placeholder="Enter username" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label text-white">
+                        <i class="fas fa-envelope me-2" style="color:#17a2b8;"></i>Email
+                    </label>
+                    <input type="email" name="email" class="form-control bg-dark text-white border-1" placeholder="Enter email" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label text-white">
+                        <i class="fas fa-key me-2" style="color:#17a2b8;"></i>Password
+                    </label>
+                    <input type="password" name="password" class="form-control bg-dark text-white border-1" placeholder="Enter password" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label text-white">
+                        <i class="fas fa-key me-2" style="color:#17a2b8;"></i>Confirm Password
+                    </label>
+                    <input type="password" name="confirm_password" class="form-control bg-dark text-white border-1" placeholder="Confirm password" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label text-white">
+                        <i class="fas fa-phone me-2" style="color:#17a2b8;"></i>Mobile Number
+                    </label>
+                    <input type="text" name="mobile" class="form-control bg-dark text-white border-1" placeholder="Enter mobile number" maxlength="10" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label text-white">
+                        <i class="fas fa-home me-2" style="color:#17a2b8;"></i>Address
+                    </label>
+                    <textarea name="address" class="form-control bg-dark text-white border-1" placeholder="Enter address" required></textarea>
+                </div>
+
+                <button type="submit" class="btn w-100 py-2" style="background:#17a2b8; border-color:#17a2b8; color:white;">Register</button>
+            </form>
+
+            <!-- LOGIN LINK -->
+            <p class="text-center text-white mt-3 mb-0">
+                Already have an account? 
+                <a href="{% url 'login' %}" style="color:#17a2b8; text-decoration:none;">Login</a>
+            </p>
+
+        </div>
+    </div>
+</div>
+
+<!-- OPTIONAL STYLING -->
+<style>
+    input.form-control:focus, textarea.form-control:focus {
+        border-color: #17a2b8;
+        box-shadow: 0 0 5px #17a2b8;
+    }
+    .btn:hover {
+        background-color: #138496;
+        border-color: #117a8b;
+    }
+</style>
+
+{% endblock %}

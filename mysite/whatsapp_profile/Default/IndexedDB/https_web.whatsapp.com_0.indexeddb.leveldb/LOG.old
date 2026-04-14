@@ -1,0 +1,36 @@
+2026/04/14-14:30:16.331 4f3c Reusing MANIFEST D:\Projects\vehicle_service_reminder\mysite\whatsapp_profile\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2026/04/14-14:30:16.332 4f3c Recovering log #72
+2026/04/14-14:30:16.337 4f3c Reusing old log D:\Projects\vehicle_service_reminder\mysite\whatsapp_profile\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000072.log 
+2026/04/14-14:30:16.338 4f3c Delete type=2 #74
+2026/04/14-14:30:18.146 4f3c Compacting 1@1 + 2@2 files
+2026/04/14-14:30:18.258 4f3c Generated table #75@1: 49726 keys, 2219255 bytes
+2026/04/14-14:30:18.270 4f3c Generated table #76@1: 4564 keys, 374233 bytes
+2026/04/14-14:30:18.270 4f3c Compacted 1@1 + 2@2 files => 2593488 bytes
+2026/04/14-14:30:18.271 4f3c compacted to: files[ 0 0 5 0 0 0 0 ]
+2026/04/14-14:30:18.272 4f3c Delete type=2 #69
+2026/04/14-14:30:18.272 4f3c Delete type=2 #70
+2026/04/14-14:30:18.272 4f3c Delete type=2 #73
+2026/04/14-14:30:26.843 3088 Level-0 table #78: started
+2026/04/14-14:30:26.873 3088 Level-0 table #78: 1176398 bytes OK
+2026/04/14-14:30:26.875 3088 Delete type=0 #72
+2026/04/14-14:30:26.878 3088 Compacting 1@1 + 5@2 files
+2026/04/14-14:30:26.961 3088 Generated table #79@1: 51638 keys, 2217629 bytes
+2026/04/14-14:30:27.018 3088 Generated table #80@1: 27614 keys, 2186822 bytes
+2026/04/14-14:30:27.059 3088 Generated table #81@1: 39213 keys, 1311835 bytes
+2026/04/14-14:30:27.059 3088 Compacted 1@1 + 5@2 files => 5716286 bytes
+2026/04/14-14:30:27.059 3088 compacted to: files[ 0 0 3 0 0 0 0 ]
+2026/04/14-14:30:27.518 3088 Level-0 table #83: started
+2026/04/14-14:30:27.557 3088 Level-0 table #83: 1074099 bytes OK
+2026/04/14-14:30:27.558 3088 Delete type=2 #65
+2026/04/14-14:30:27.558 3088 Delete type=2 #66
+2026/04/14-14:30:27.558 3088 Delete type=2 #71
+2026/04/14-14:30:27.558 3088 Delete type=2 #75
+2026/04/14-14:30:27.559 3088 Delete type=2 #76
+2026/04/14-14:30:27.559 3088 Delete type=0 #77
+2026/04/14-14:30:27.559 3088 Delete type=2 #78
+2026/04/14-14:30:27.565 3088 Compacting 1@1 + 2@2 files
+2026/04/14-14:30:27.668 3088 Generated table #84@1: 50113 keys, 2212491 bytes
+2026/04/14-14:30:27.744 3088 Generated table #85@1: 33922 keys, 2199016 bytes
+2026/04/14-14:30:27.757 3088 Generated table #86@1: 9081 keys, 528331 bytes
+2026/04/14-14:30:27.757 3088 Compacted 1@1 + 2@2 files => 4939838 bytes
+2026/04/14-14:30:27.758 3088 compacted to: files[ 0 0 4 0 0 0 0 ]
