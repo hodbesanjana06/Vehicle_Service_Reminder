@@ -105,27 +105,27 @@ vehicle-service-reminder/
 
 ## 📸 Application Screenshots
 
-### 🔐 Login Page
+### Login Page
 <img src="login.png" width="800">
 
 <br><br>
 
-### 🏠 Dashboard
+### Dashboard
 <img src="dashboard.png" width="800">
 
 <br><br>
 
-### 🚘 Add Vehicle
+### Add Vehicle
 <img src="add-vehicle.png" width="800">
 
 <br><br>
 
-### 📅 Book Vehicle Service
+### Book Vehicle Service
 <img src="book-vehicle.png" width="800">
 
 <br><br>
 
-### 🧾 Service History
+### Service History
 <img src="service-history.png" width="800">
 
 <br><br>
