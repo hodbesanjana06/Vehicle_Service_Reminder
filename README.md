@@ -19,10 +19,14 @@ A smart **Vehicle Service Reminder Web Application** built using Django that hel
 
 ## 🧑‍💻 Tech Stack
 
-- Frontend: HTML, CSS, Bootstrap, JavaScript  
-- Backend: Django (Python)  
-- Database: SQLite  
-- Automation: Selenium (WhatsApp messaging automation)
+| Layer        | Technologies Used |
+|-------------|------------------|
+| Frontend    | HTML, CSS, Bootstrap, JavaScript |
+| Backend     | Django (Python) |
+| Database    | SQLite |
+| Automation  | Selenium (WhatsApp Web Automation) |
+| Styling     | Bootstrap |
+| Tools       | VS Code, Git, GitHub |
 
 ---
 
@@ -106,31 +110,31 @@ vehicle-service-reminder/
 ## 📸 Application Screenshots
 
 ### Login Page
-<img src="login.png" width="800">
+<img src="screenshots/login.png" width="800">
 
 <br><br>
 
 ### Dashboard
-<img src="dashboard.png" width="800">
+<img src="screenshots/dashboard.png" width="800">
 
 <br><br>
 
 ### Add Vehicle
-<img src="add-vehicle.png" width="800">
+<img src="screenshots/add-vehicle.png" width="800">
 
 <br><br>
 
 ### Book Vehicle Service
-<img src="book-vehicle.png" width="800">
+<img src="screenshots/book-vehicle.png" width="800">
 
 <br><br>
 
 ### Service History
-<img src="service-history.png" width="800">
+<img src="screenshots/service-history.png" width="800">
 
 <br><br>
 
-### 📲 WhatsApp Reminder (Automation)
-<img src="reminder-msg.png" width="800">
+### WhatsApp Reminder (Automation)
+<img src="screenshots/reminder-msg.png" width="800">
 
 
